@@ -1,4 +1,5 @@
 'use strict';
+const path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
   entry: './src/app.ts',
   devtool: 'inline-source-map',
   devServer: {
-    static: './src',
+    static: './dist',
   },
   plugins: [(
     new HtmlWebpackPlugin({
@@ -14,6 +15,11 @@ module.exports = {
       inject: 'body'
     })
   )],
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true
+  },
   module: {
     rules: [{
       test: /\.(js|jsx|tsx|ts)$/,
