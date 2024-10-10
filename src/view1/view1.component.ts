@@ -1,9 +1,12 @@
 import angular from 'angular';
 import './view1.css';
 
-View1Controller.$inject = ['$scope'];
-function View1Controller($scope: any) {
-  $scope.message = 'This is View 1';
+class View1Controller {
+  message: string;
+
+  constructor() {
+    this.message = 'This is View 1';
+  }
 }
 
 angular.

@@ -1,9 +1,12 @@
 import angular from 'angular';
 import './view2.css';
 
-View2Controller.$inject = ['$scope'];
-function View2Controller($scope: any) {
-  $scope.message = 'This is View 2';
+class View2Controller {
+  message: string;
+
+  constructor() {
+    this.message = 'This is View 2';
+  }
 }
 
 angular.
