@@ -3,6 +3,12 @@ import 'angular-route';
 
 import './app.css';
 
+import './view1/view1.module';
+import './view1/view1.component';
+
+import './view2/view2.module';
+import './view2/view2.component';
+
 let app = () => {
   return {
     template: require('./app.html').default,
@@ -20,7 +26,7 @@ class AppCtrl {
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, ['ngRoute'])
+angular.module(MODULE_NAME, ['ngRoute', 'view1', 'view2'])
   .directive('app', app)
   .controller('AppCtrl', AppCtrl)
   .config(['$routeProvider',
@@ -28,6 +34,12 @@ angular.module(MODULE_NAME, ['ngRoute'])
       $routeProvider.
         when('/', {
           template: '<app></app>'
+        }).
+        when('/view1', {
+          template: '<view1></view1>'
+        }).
+        when('/view2', {
+          template: '<view2></view2>'
         }).
         otherwise('/');
     }
