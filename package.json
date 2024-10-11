@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/preboot/angularjs-webpack",
   "dependencies": {
+    "@angular/cli": "^18.2.8",
     "@angular/common": "^18.2.8",
     "@angular/compiler": "^18.2.8",
     "@angular/core": "^18.2.8",

@@ -3,11 +3,14 @@ import 'angular-route';
 
 import './app.css';
 
-import './view1/view1.module';
-import './view1/view1.component';
+import './ajs/view1/view1.module';
+import './ajs/view1/view1.component';
 
-import './view2/view2.module';
-import './view2/view2.component';
+import './ajs/view2/view2.module';
+import './ajs/view2/view2.component';
+
+import './ajs/view3/view3.module';
+import './angular/view3/view3.component';
 
 let app = () => {
   return {
@@ -26,7 +29,7 @@ class AppCtrl {
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, ['ngRoute', 'view1', 'view2'])
+angular.module(MODULE_NAME, ['ngRoute', 'view1', 'view2', 'view3'])
   .directive('app', app)
   .controller('AppCtrl', AppCtrl)
   .config(['$routeProvider',
@@ -40,6 +43,9 @@ angular.module(MODULE_NAME, ['ngRoute', 'view1', 'view2'])
         }).
         when('/view2', {
           template: '<view2></view2>'
+        }).
+        when('/view3', {
+          template: '<view3></view3>'
         }).
         otherwise('/');
     }
