@@ -3,39 +3,33 @@ import 'angular-route';
 
 import './app.css';
 
-import './ajs/view1/view1.module';
-import './ajs/view1/view1.component';
+import './view1/view1.module';
+import './view1/view1.component';
 
-import './ajs/view2/view2.module';
-import './ajs/view2/view2.component';
+import './view2/view2.module';
+import './view2/view2.component';
 
-import './ajs/view3/view3.module';
-import './angular/view3/view3.component';
-
-let app = () => {
-  return {
-    template: require('./app.html').default,
-    controller: 'AppCtrl',
-    controllerAs: 'app'
-  }
-};
+import './view3/view3.module';
+import './../angular/view3/view3.component';
 
 class AppCtrl {
-  url: string = '';
+  message: string = '';
   constructor() {
-    this.url = 'https://github.com/preboot/angular-webpack';
+    this.message = 'Hello from AngularJS !';
   }
 }
 
 const MODULE_NAME = 'app';
 
 angular.module(MODULE_NAME, ['ngRoute', 'view1', 'view2', 'view3'])
-  .directive('app', app)
-  .controller('AppCtrl', AppCtrl)
+  .component('app', {
+    template: require('./app.html').default,
+    controller: AppCtrl,
+  })
   .config(['$routeProvider',
     function config($routeProvider: any) {
       $routeProvider.
-        when('/', {
+        when('/angularJS', {
           template: '<app></app>'
         }).
         when('/view1', {
@@ -46,8 +40,7 @@ angular.module(MODULE_NAME, ['ngRoute', 'view1', 'view2', 'view3'])
         }).
         when('/view3', {
           template: '<view3></view3>'
-        }).
-        otherwise('/');
+        });
     }
   ]);
 

@@ -1,11 +1,10 @@
 import angular from 'angular';
-import './view1.css';
 
 class View1Controller {
   message: string;
 
   constructor() {
-    this.message = 'This is View 1';
+    this.message = 'This is View 1 (AngularJS Module and Component).';
   }
 }
 
