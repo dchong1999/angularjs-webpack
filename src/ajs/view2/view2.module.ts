@@ -1,4 +1,4 @@
 import angular from 'angular';
 
-angular.module('view2', []);
+export const view2Module = angular.module('view2', ['ui.router']);
   

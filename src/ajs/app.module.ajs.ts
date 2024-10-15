@@ -1,48 +1,24 @@
 import angular from 'angular';
-import 'angular-route';
+import uiRouter from "@uirouter/angularjs";
+import { upgradeModule } from "@uirouter/angular-hybrid";
 
 import './app.css';
+import {angularJSState, view1State, view2State, view3State} from './app.states';
 
-import './view1/view1.module';
+import { angularjsModule } from './angularjs/angularjs.module';
+import { view1Module } from './view1/view1.module';
+import { view2Module } from './view2/view2.module';
+import { view3Module } from './view3/view3.module';
+import './angularjs/angularjs.component';
 import './view1/view1.component';
-
-import './view2/view2.module';
 import './view2/view2.component';
-
-import './view3/view3.module';
 import './../angular/view3/view3.component';
 
-class AppCtrl {
-  message: string = '';
-  constructor() {
-    this.message = 'Hello from AngularJS !';
-  }
-}
-
-const MODULE_NAME = 'app';
-
-angular.module(MODULE_NAME, ['ngRoute', 'view1', 'view2', 'view3'])
-  .component('app', {
-    template: require('./app.html').default,
-    controller: AppCtrl,
-  })
-  .config(['$routeProvider',
-    function config($routeProvider: any) {
-      $routeProvider.
-        when('/angularJS', {
-          template: '<app></app>'
-        }).
-        when('/view1', {
-          template: '<view1></view1>'
-        }).
-        when('/view2', {
-          template: '<view2></view2>'
-        }).
-        when('/view3', {
-          template: '<view3></view3>'
-        });
-    }
-  ]);
-
-
-export default MODULE_NAME;
+export const appJSModule = angular
+  .module('app', [uiRouter, upgradeModule.name, angularjsModule.name, view1Module.name, view2Module.name, view3Module.name])
+  .config(['$stateProvider', ($stateProvider: any) => {
+  $stateProvider.state(angularJSState);
+  $stateProvider.state(view1State);
+  $stateProvider.state(view2State);
+  $stateProvider.state(view3State);
+}]);

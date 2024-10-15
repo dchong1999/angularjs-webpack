@@ -1,4 +1,4 @@
-import angular from 'angular';
+import { view2Module } from "./view2.module";
 
 class View2Controller {
   message: string;
@@ -8,8 +8,7 @@ class View2Controller {
   }
 }
 
-angular.
-  module('view2', []).
+view2Module.
   component('view2', {
     template: require('./view2.html').default,
     controller: View2Controller,
