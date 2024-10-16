@@ -1,14 +1,83 @@
 <main>
-    <h1 class="title">{{$ctrl.message}}</h1>
-  </main>
-  <footer>
-    <div>
-      <a ui-sref="angularjs" ui-sref-active="active">AngularJS</a>
-      <a ui-sref="angular" ui-sref-active="active">Angular</a>
-      <a ui-sref="view1" ui-sref-active="active">View 1</a>
-      <a ui-sref="view2" ui-sref-active="active">View 2</a>
-      <a ui-sref="view3" ui-sref-active="active">View 3</a>
-      <a ui-sref="view4" ui-sref-active="active">View 4</a>
+  <h1 class="title">{{$ctrl.message}}</h1>
+  <div class="text-start ps-5" style="font-size: small;">
+    Notes:
+    <ul>
+      <li>Preparation</li>
+      <ul>
+        <li>Follow the <a href="https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md">AngularJS Style
+            Guide</a></li>
+        <ul>
+          <li>Main point: Enable migration one feature at a time</li>
+          <li>Rule of 1: 1 controller/component/service/filter per file (max 400 lines)</li>
+          <li>Folders-by-Feature: Organize folders and modules</li>
+        </ul>
+        <li>Use a module loader (ex. Webpack)</li>
+        <ul>
+          <li>Helps to bundle all your individual files and load code in the correct order</li>
+        </ul>
+        <li>Migrate to Typescript</li>
+        <ul>
+          <li>Install typescript compiler</li>
+          <li>Rename app files from .js to .ts</li>
+          <li>Can organize part of code into classes</li>
+        </ul>
+        <li>Use AngularJS Component Directives</li>
+        <ul>
+          <li>Main point: Closely mimic Angular components to make migration easier</li>
+          <li>Component directives: Directives that define a template, controller(s), and I/O bindings</li>
+          <li>Try to avoid lower-level features (ng-controller, ng-include, scope inheritance, etc.)</li>
+          <li>More best practices when using component directives <a href="https://v17.angular.io/guide/upgrade#using-component-directives">here</a></li>
+        </ul>
+      </ul>
+      <li>Hybridization</li>
+      <ul>
+        <li>ngUpgrade</li>
+        <ul>
+          <li>ngUpgrade allows you to run the AngularJS and Angular framework at the same time</li>
+          <li>This is an Angular library that allows you to mix/match AngularJS and Angular components in the same application seamlessly</li>
+          <li>AngularJS EOL is 12/31/21. ngUpgrade is in a feature complete state - security and bug fixes will roll out until 12/31/23</li>
+          <li>Code runs in its respective framework - components/services managed by one framework can interoperate with those of the other framework</li>
+          <li>This affects 3 main areas:</li>
+          <ul>
+            <li><a href="https://v17.angular.io/guide/upgrade#dependency-injection">Dependency Injection</a></li>
+            <ul>
+              <li>There are differences in how the two frameworks handle dependency injection</li>
+              <li>upgrade/static resolves the differences by:</li>
+              <ul>
+                <li>1. Allowing you to upgrade AngularJS services and inject them into Angular code (available to all components from the root injector)</li>
+                <li>2. Allowing you to downgrade Angular services from the root injector, specify the string token to identify the service in AngularJS, and inject them into AngularJS code</li>
+                <li>All while keeping the same singleton instance of each service across both frameworks</li>
+              </ul>
+            </ul>
+            <li><a href="https://v17.angular.io/guide/upgrade#components-and-the-dom">The DOM</a></li>
+            <ul>
+              <li>Components communicate to one another via the I/O bindings from their respective framework (or via shared injected dependencies - as shown above)</li>
+              <li>ngUpgrade bridges their I/O bindings together - but every element is the DOM ends up being owned by exactly 1 of the 2 frameworks, never both</li>
+              <li>If an element is owned by AngularJS, Angular ignores it, and vice versa</li>
+            </ul>
+            <li><a href="https://v17.angular.io/guide/upgrade#change-detection">Change detection</a></li>
+            <ul>
+              <li>AngularJS: Uses scope.$apply() to detect changes and update bindings - gets called after every event (either automatically or manually)</li>
+              <li>Angular: Code runs inside the Angular Zone - will always know when code finishes and automatically kick off change detection without a function call</li>
+              <li>Hybrid: UpgradeModule bridges both approaches</li>
+              <ul>
+                <li>Everything runs inside the Angular zone - which will trigger Angular change detection after every event</li>
+                <li>UpgradeModule will invoke AngularJS' $rootScope.$apply() after every turn of the Angular zone - triggering AngularJS change detection each time as well</li>
+                <li>You can still use $apply() but it is not necessary any more</li>
+                <li>If you downgrade an Angular component and put it in the AngularJS framework, the inputs of the component will be watched with AngularJS change detection (you can hook into the changes by implementing OnChanges in the component like normal)</li>
+                <li>If you upgrade an AngularJS component and put it in the Angular framework, all bindings of the component directive will be hooked with Angular's change detection</li>
+              </ul>
+            </ul>
+          </ul>
+        </ul>
+        <li>Bootstrapping</li>
+        <ul>
+          <li>In a normal AngularJS app, you can automatically bootstrap your root module via the ng-app directive. Alternatively you can remove the diretive from the HTML and manually bootstrap the module by using angular.bootstrap.</li>
+          <li>For hybrid apps, you manually bootstrap the AngularJS root module in the Angular root module via UpgradeModule, which is part of ngUpgrade</li>
+          <li>You will first need to install the angular framework</li>
+        </ul>
+      </ul>
+    </ul>
   </div>
-  </footer>
-  <ui-view></ui-view>
+</main>

@@ -1,3 +1,6 @@
+import 'jquery';
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import * as angular from 'angular'; //must come before setAngualrJSGlobal
 import { setAngularJSGlobal  } from '@angular/upgrade/static';
